@@ -1,0 +1,21 @@
+# Node and build artifacts
+node_modules
+.nuxtrc
+.nuxt
+dist
+
+# Environment and configuration files
+.env
+
+# Logs
+*.log
+
+# Linting and formatting configurations
+.prettierrc
+.eslintrc
+.eslintignore
+*.tsbuildinfo
+
+# Other unnecessary files
+Dockerfile
+README.md

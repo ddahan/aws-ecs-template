@@ -1,0 +1,36 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=local
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    ports:
+       - "3000:80"
+    environment:
+      - NUXT_API_BASE=http://backend:8000
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - backend
+
+  db:
+    image: postgres:17-bookworm
+    environment:
+      POSTGRES_USER=localuser
+      POSTGRES_PASSWORD=localpassword
+      POSTGRES_DB=localdb
+    volumes:
+      - pgdata-ecs:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  pgdata-ecs:
