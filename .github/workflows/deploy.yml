@@ -1,0 +1,46 @@
+name: Build and Push Docker Images to ECR
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AWS_REGION: eu-west-3
+  IMAGE_TAG: ${{ github.sha }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Log in to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build and push backend image
+        run: |
+          docker build -t ${{ secrets.ECR_BACK_URI }}:${{ env.IMAGE_TAG }} ./back/app
+          docker tag ${{ secrets.ECR_BACK_URI }}:${{ env.IMAGE_TAG }} ${{ secrets.ECR_BACK_URI }}:latest
+          docker push ${{ secrets.ECR_BACK_URI }}:${{ env.IMAGE_TAG }}
+          docker push ${{ secrets.ECR_BACK_URI }}:latest
+
+      - name: Build and push frontend image
+        run: |
+          docker build -t ${{ secrets.ECR_FRONT_URI }}:${{ env.IMAGE_TAG }} ./front/app
+          docker tag ${{ secrets.ECR_FRONT_URI }}:${{ env.IMAGE_TAG }} ${{ secrets.ECR_FRONT_URI }}:latest
+          docker push ${{ secrets.ECR_FRONT_URI }}:${{ env.IMAGE_TAG }}
+          docker push ${{ secrets.ECR_FRONT_URI }}:latest
