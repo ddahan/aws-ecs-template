@@ -6,5 +6,6 @@
   </template>
   
   <script setup lang="ts">
-  const { data: message } = await useFetch(`${useRuntimeConfig().public.apiBase}/api/hello`)
+  // omitting credentials only for CORS to work with '*'
+  const { data: message } = await useFetch(`${useRuntimeConfig().public.apiBase}/api/hello`, { credentials: 'omit' })
   </script>
