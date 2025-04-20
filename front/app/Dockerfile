@@ -5,6 +5,9 @@ WORKDIR /app
 
 COPY . .
 
+ARG NUXT_API_BASE
+ENV NUXT_API_BASE=$NUXT_API_BASE
+
 RUN npm install
 RUN npm run build
 
