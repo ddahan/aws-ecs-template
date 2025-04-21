@@ -1,6 +1,6 @@
 <template>
     <div>
-      <h1>Nuxt 3 SPA with Docker + Nginx</h1>
+      <h1>Nuxt 3 SPA (static files, no ssr) calling a fastAPI endpoint</h1>
       <p>Message from API: {{ message }}</p>
     </div>
   </template>
