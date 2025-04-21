@@ -40,7 +40,9 @@ jobs:
 
       - name: Build and push frontend image
         run: |
-          docker build --build-arg NUXT_API_BASE=${{ secrets.NUXT_API_BASE }} -t ${{ secrets.ECR_FRONT_URI }}:${{ env.IMAGE_TAG }} ./front/app
+          docker build \
+            --build-arg NUXT_API_BASE=${{ secrets.NUXT_API_BASE }} \
+            -t ${{ secrets.ECR_FRONT_URI }}:${{ env.IMAGE_TAG }} ./front/app
           docker tag ${{ secrets.ECR_FRONT_URI }}:${{ env.IMAGE_TAG }} ${{ secrets.ECR_FRONT_URI }}:latest
           docker push ${{ secrets.ECR_FRONT_URI }}:${{ env.IMAGE_TAG }}
           docker push ${{ secrets.ECR_FRONT_URI }}:latest
