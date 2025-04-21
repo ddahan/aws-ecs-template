@@ -5,8 +5,8 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=False, # ⚠️ could cause problem later with JWT. Can be replace by True and list all the urls
+    allow_origins=["http://localhost:3000", "https://ecs-front.walt.ovh"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
