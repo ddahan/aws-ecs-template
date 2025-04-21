@@ -47,18 +47,18 @@ jobs:
           docker push ${{ secrets.ECR_FRONT_URI }}:${{ env.IMAGE_TAG }}
           docker push ${{ secrets.ECR_FRONT_URI }}:latest
 
-      - name: Deploy backend to ECS
-        run: |
-          aws ecs update-service \
-            --cluster my-cluster \
-            --service back-service \
-            --force-new-deployment \
-            --region ${{ env.AWS_REGION }}
+      # - name: Deploy backend to ECS
+      #   run: |
+      #     aws ecs update-service \
+      #       --cluster my-cluster \
+      #       --service back-service \
+      #       --force-new-deployment \
+      #       --region ${{ env.AWS_REGION }}
 
-      - name: Deploy frontend to ECS
-        run: |
-          aws ecs update-service \
-            --cluster my-cluster \
-            --service front-service \
-            --force-new-deployment \
-            --region ${{ env.AWS_REGION }}
+      # - name: Deploy frontend to ECS
+      #   run: |
+      #     aws ecs update-service \
+      #       --cluster my-cluster \
+      #       --service front-service \
+      #       --force-new-deployment \
+      #       --region ${{ env.AWS_REGION }}
